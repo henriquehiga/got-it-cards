@@ -1,0 +1,20 @@
+{
+  "name": "got-it-cards",
+  "version": "1.0.0",
+  "description": "A aplicação de Flash Cards é uma ferramenta que ajuda no estudo e memorização de conteúdos de forma interativa e personalizada. Através da criação de cartões com perguntas e respostas, o usuário pode testar seus conhecimentos e praticar até fixá-los na memória.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codehiga/got-it-cards.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/codehiga/got-it-cards/issues"
+  },
+  "homepage": "https://github.com/codehiga/got-it-cards#readme"
+}
