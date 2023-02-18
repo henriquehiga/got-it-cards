@@ -1,10 +1,6 @@
 export type HttpRequest = {
   body: any;
-  param:
-    | {
-        ["key"]: string;
-      }[]
-    | null;
+  param: Record<string, any>;
 };
 
 export type HttpResponse = {
