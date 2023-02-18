@@ -47,7 +47,9 @@ describe("PersistNewFlashCardController", () => {
         dificulty: 1,
         type: "valid type",
       },
-      param: null,
+      param: {
+        id: "",
+      },
     };
     const missingFieldError = new MissingFieldError("question");
     vitest.spyOn(usecase, "execute").mockResolvedValueOnce(
@@ -71,10 +73,13 @@ describe("PersistNewFlashCardController", () => {
         dificulty: 1,
         type: "valid type",
       },
-      param: null,
+      param: {
+        id: "",
+      },
     };
     const response: HttpResponse = await sut.handle(request);
     expect(response.statusCode).toBe(201);
     expect(response.body.props).toHaveProperty("id");
+    expect(response.body.props).toHaveProperty("question");
   });
 });
