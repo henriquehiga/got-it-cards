@@ -4,7 +4,9 @@
   "description": "A aplicação de Flash Cards é uma ferramenta que ajuda no estudo e memorização de conteúdos de forma interativa e personalizada. Através da criação de cartões com perguntas e respostas, o usuário pode testar seus conhecimentos e praticar até fixá-los na memória.",
   "main": "index.js",
   "scripts": {
-    "test": "vitest --run"
+    "test": "vitest --run",
+    "test:coverage": "vitest --coverage --run",
+    "test:watch": "vitest"
   },
   "repository": {
     "type": "git",
@@ -19,6 +21,7 @@
   "homepage": "https://github.com/codehiga/got-it-cards#readme",
   "devDependencies": {
     "@types/node": "^18.14.0",
+    "@vitest/coverage-c8": "^0.28.5",
     "git-commit-msg-linter": "^4.7.3",
     "husky": "^8.0.3",
     "ts-node": "^10.9.1",
