@@ -6,7 +6,8 @@
   "scripts": {
     "test": "vitest --run",
     "test:coverage": "vitest --coverage --run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "build": "rm -r -f dist && tsc"
   },
   "repository": {
     "type": "git",
