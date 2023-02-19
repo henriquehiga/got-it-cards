@@ -3,7 +3,7 @@ import { db } from "../../infra/pg-promise";
 import { UserRepository } from "../protocols/user-repository";
 
 enum UserRepositoryQueries {
-  SAVE = "INSERT INTO gotitcards.users(id, name, email, password) VALUES (${id}, ${name}, ${email}, ${password});",
+  SAVE = "INSERT INTO gotitcards.users(name, email, password) VALUES (${name}, ${email}, ${password});",
 }
 
 export class PgPromiseUserRepository implements UserRepository {

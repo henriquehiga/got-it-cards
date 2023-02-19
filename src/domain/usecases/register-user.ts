@@ -10,12 +10,7 @@ export class RegisterUser {
   constructor(private readonly userRepo: UserRepository) {}
 
   async execute(data: UserModel.Create): Promise<Either<ErrorResponse, User>> {
-    let id = IdGenerator.get();
-    const dataWithId = {
-      id,
-      ...data,
-    };
-    const userOrError = User.create(dataWithId);
+    const userOrError = User.create(data);
     if (userOrError.isLeft()) {
       return left(userOrError.value);
     }
