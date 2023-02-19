@@ -3,7 +3,7 @@ import { InMemoryUserRepository } from "./../../data/tests/memory-user-repositor
 import { MissingFieldError } from "./../entities/errors/missing-field-error";
 import { ErrorResponse } from "./../../shared/error-response";
 import { UserModel } from "../entities/models/user-model";
-import { describe, expect, it, vitest } from "vitest";
+import { describe, expect, it } from "vitest";
 import { UserRepository } from "../../data/protocols/user-repository";
 
 type sutTypes = {
