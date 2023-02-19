@@ -11,7 +11,7 @@ export class PersistNewFlashCard {
 
   async execute(
     data: FlashCardModel.Create
-  ): Promise<Either<ErrorResponse, FlashCard>> {
+  ): Promise<Either<ErrorResponse, FlashCardModel.Model>> {
     let id = IdGenerator.get();
     const dataWithId = {
       id,
@@ -32,6 +32,6 @@ export class PersistNewFlashCard {
         msg: unexpectedServerError.message,
       });
     }
-    return right(flashCardOrError.value);
+    return right(flashCardOrError.value.props);
   }
 }

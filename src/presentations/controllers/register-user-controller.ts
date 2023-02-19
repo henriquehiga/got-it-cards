@@ -16,7 +16,7 @@ export class RegisterUserController implements Controller {
       };
     }
     return {
-      body: usecaseResponse.value.props,
+      body: usecaseResponse.value,
       statusCode: 201,
     };
   }

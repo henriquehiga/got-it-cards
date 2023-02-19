@@ -9,7 +9,9 @@ import { Crypto } from "../../libs/crypto";
 export class RegisterUser {
   constructor(private readonly userRepo: UserRepository) {}
 
-  async execute(data: UserModel.Create): Promise<Either<ErrorResponse, User>> {
+  async execute(
+    data: UserModel.Create
+  ): Promise<Either<ErrorResponse, UserModel.Return>> {
     const decryptedPassword = Crypto.decrypt(data.password);
     const hashedPassword = Crypto.hash(decryptedPassword);
     data = {
@@ -31,6 +33,9 @@ export class RegisterUser {
         msg: unexpectedServerError.message,
       });
     }
-    return right(userOrError.value);
+    return right({
+      email: userOrError.value.props.email,
+      name: userOrError.value.props.name,
+    });
   }
 }

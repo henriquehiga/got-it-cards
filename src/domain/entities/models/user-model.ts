@@ -5,4 +5,5 @@ export namespace UserModel {
     password: string;
   };
   export type Create = UserModel.Model;
+  export type Return = Omit<UserModel.Model, "password">;
 }
