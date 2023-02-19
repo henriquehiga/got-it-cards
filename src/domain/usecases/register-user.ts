@@ -18,7 +18,7 @@ export class RegisterUser {
       await this.userRepo.save(userOrError.value.props);
     } catch (error: Error | any) {
       const unexpectedServerError = new UnexpectedServerError(
-        "PersistNewFlashCard > flashCardRepo.save"
+        "RegisterUser > userRepo.save"
       );
       return left({
         error: unexpectedServerError,
