@@ -1,6 +1,7 @@
 export namespace FlashCardModel {
   export type Model = {
     id: string;
+    user_id?: string;
     question: string;
     awnser: string;
     category: string;
