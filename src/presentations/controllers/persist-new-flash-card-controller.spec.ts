@@ -79,7 +79,7 @@ describe("PersistNewFlashCardController", () => {
     };
     const response: HttpResponse = await sut.handle(request);
     expect(response.statusCode).toBe(201);
-    expect(response.body.props).toHaveProperty("id");
-    expect(response.body.props).toHaveProperty("question");
+    expect(response.body).toHaveProperty("id");
+    expect(response.body).toHaveProperty("question");
   });
 });
