@@ -6,7 +6,6 @@ import { ErrorResponse } from "../../shared/error-response";
 import { HttpRequest, HttpResponse } from "../protocols/http";
 import { RegisterUser } from "../../domain/usecases/register-user";
 import { UserModel } from "../../domain/entities/models/user-model";
-import { User } from "../../domain/entities/user";
 import { InMemoryUserRepository } from "../../data/tests/memory-user-repository";
 
 type sutTypes = {
@@ -19,13 +18,11 @@ const makeSut = (): sutTypes => {
   class MockRegisterUserUsecase extends RegisterUser {
     async execute(
       data: UserModel.Create
-    ): Promise<Either<ErrorResponse, User>> {
-      return right(
-        new User({
-          id: "valid-id",
-          ...data,
-        })
-      );
+    ): Promise<Either<ErrorResponse, UserModel.Return>> {
+      return right({
+        name: data.name,
+        email: data.email,
+      });
     }
   }
   const usecaseStub = new MockRegisterUserUsecase(repository);
@@ -75,7 +72,7 @@ describe("RegisterUserController", () => {
     };
     const response: HttpResponse = await sut.handle(request);
     expect(response.statusCode).toBe(201);
-    expect(response.body).toHaveProperty("id");
+    expect(response.body).toHaveProperty("name");
     expect(response.body).toHaveProperty("email");
   });
 });
