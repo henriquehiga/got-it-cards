@@ -67,7 +67,7 @@ describe("PersistNewFlashCard Usecase", () => {
       type: "valid type",
     };
     const flashCard = (await sut.execute(validCreateFlashCardModel))
-      .value as FlashCard;
-    expect(flashCard).toBeInstanceOf(FlashCard);
+      .value as FlashCardModel.Model;
+    expect(flashCard).toHaveProperty("id");
   });
 });

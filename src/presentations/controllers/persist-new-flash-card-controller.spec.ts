@@ -19,13 +19,11 @@ const makeSut = (): sutTypes => {
   class MockPersistNewFlashCardUsecase extends PersistNewFlashCard {
     async execute(
       data: FlashCardModel.Create
-    ): Promise<Either<ErrorResponse, FlashCard>> {
-      return right(
-        new FlashCard({
-          id: "valid-id",
-          ...data,
-        })
-      );
+    ): Promise<Either<ErrorResponse, FlashCardModel.Model>> {
+      return right({
+        id: "valid-id",
+        ...data,
+      });
     }
   }
   const usecaseStub = new MockPersistNewFlashCardUsecase(repository);
