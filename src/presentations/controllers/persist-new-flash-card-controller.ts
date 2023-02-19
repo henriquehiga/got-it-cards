@@ -16,7 +16,7 @@ export class PersistNewFlashCardController implements Controller {
       };
     }
     return {
-      body: usecaseResponse.value,
+      body: usecaseResponse.value.props,
       statusCode: 201,
     };
   }
