@@ -1,6 +1,5 @@
 import { InMemoryFlashCardRepository } from "./../../data/tests/memory-flash-card-repository";
 import { PersistNewFlashCard } from "./persist-new-flash-card";
-import { FlashCard } from "./../entities/flash-card";
 import { MissingFieldError } from "./../entities/errors/missing-field-error";
 import { ErrorResponse } from "./../../shared/error-response";
 import { FlashCardModel } from "../entities/models/flash-card-model";
