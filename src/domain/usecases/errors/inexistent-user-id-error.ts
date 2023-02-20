@@ -1,6 +1,6 @@
 export class InexistentUserIdError extends Error {
   constructor() {
-    super("O valor do ID do usuário é inexistente ou inválido!");
+    super("O e-mail forncecido é inválido!");
     this.name = "InexistentUserIdValue";
   }
 }
