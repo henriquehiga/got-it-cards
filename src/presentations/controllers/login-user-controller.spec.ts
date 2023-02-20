@@ -42,7 +42,7 @@ describe("LoginUserController", () => {
         password: "valid awnser",
         email: "",
       },
-      param: {
+      params: {
         id: "",
       },
     };
@@ -66,7 +66,7 @@ describe("LoginUserController", () => {
         password: "valid awnser",
         email: "valid@mail.com",
       },
-      param: {
+      params: {
         id: "",
       },
     };

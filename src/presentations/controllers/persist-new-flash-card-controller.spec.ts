@@ -45,7 +45,7 @@ describe("PersistNewFlashCardController", () => {
         dificulty: 1,
         type: "valid type",
       },
-      param: {
+      params: {
         id: "",
       },
     };
@@ -71,7 +71,7 @@ describe("PersistNewFlashCardController", () => {
         dificulty: 1,
         type: "valid type",
       },
-      param: {
+      params: {
         id: "",
       },
     };

@@ -48,15 +48,13 @@ describe("GetFlashCardsByUserIdController", () => {
   it("should call usecase", async () => {
     const { sut, usecase } = makeSut();
     const request: HttpRequest = {
-      body: {
-        user_id: "valid@mail.com",
-      },
-      param: {
-        id: "",
+      body: {},
+      params: {
+        userId: "valid@mail.com",
       },
     };
     const usecaseSpy = vitest.spyOn(usecase, "execute");
     await sut.handle(request);
-    expect(usecaseSpy).toHaveBeenCalledWith(request.body.user_id);
+    expect(usecaseSpy).toHaveBeenCalledWith(request.params.userId);
   });
 });

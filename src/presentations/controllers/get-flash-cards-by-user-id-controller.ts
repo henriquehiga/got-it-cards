@@ -6,9 +6,14 @@ export class GetFlashCardsByUserIdController implements Controller {
   constructor(private readonly getFlashCardsByUserId: GetFlashCardsByUserId) {}
 
   async handle(request: HttpRequest): Promise<HttpResponse> {
-    const usecaseResponse = await this.getFlashCardsByUserId.execute(
-      request.body.user_id
-    );
+    const param = request.params.userId;
+    if (!param) {
+      return {
+        body: "Obrigatório fornecer um USER_ID",
+        statusCode: 400,
+      };
+    }
+    const usecaseResponse = await this.getFlashCardsByUserId.execute(param);
     if (usecaseResponse.isLeft()) {
       return {
         body: usecaseResponse.value.msg,
