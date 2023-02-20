@@ -1,12 +1,10 @@
 import { LoginUserController } from "./login-user-controller";
 import { LoginUser } from "../../domain/usecases/login-user";
-import { RegisterUserController } from "./register-user-controller";
 import { MissingFieldError } from "../../domain/entities/errors/missing-field-error";
 import { describe, expect, it, vitest } from "vitest";
 import { Either, left, right } from "../../shared/either";
 import { ErrorResponse } from "../../shared/error-response";
 import { HttpRequest, HttpResponse } from "../protocols/http";
-import { RegisterUser } from "../../domain/usecases/register-user";
 import { UserModel } from "../../domain/entities/models/user-model";
 import { InMemoryUserRepository } from "../../data/tests/memory-user-repository";
 
