@@ -12,32 +12,28 @@ export class LoginUser {
   async execute(
     data: UserModel.Login
   ): Promise<Either<ErrorResponse, UserModel.Return>> {
-    let userOrNull: UserModel.Model | null;
     try {
-      userOrNull = await this.userRepo.findByEmail(data.email);
-      let decryptedPassword = Crypto.decrypt(userOrNull?.password ?? "");
-      const samePassword = Crypto.compareHash(
-        decryptedPassword,
-        userOrNull?.password ?? ""
-      );
-      if (!samePassword || !userOrNull) {
-        return left({
-          error: new WrongLoginDataError(),
-          msg: new WrongLoginDataError().message,
-        });
+      const user = await this.userRepo.findByEmail(data.email);
+      if (!user) {
+        const error = new WrongLoginDataError();
+        return left({ error, msg: error.message });
       }
-    } catch (err) {
-      const error = new UnexpectedServerError(
+      const decryptedPassword = Crypto.decrypt(data.password);
+      const isPasswordValid = Crypto.compareHash(
+        decryptedPassword,
+        user.password
+      );
+      if (!isPasswordValid) {
+        const error = new WrongLoginDataError();
+        return left({ error, msg: error.message });
+      }
+      return right({ email: user.email, name: user.name });
+    } catch (error) {
+      console.error(error);
+      const unexpectedError = new UnexpectedServerError(
         "LoginUser Usecase > userRepo.findByEmail"
       );
-      return left({
-        error: error,
-        msg: error.message,
-      });
+      return left({ error: unexpectedError, msg: unexpectedError.message });
     }
-    return right({
-      email: userOrNull.email,
-      name: userOrNull.name,
-    });
   }
 }
