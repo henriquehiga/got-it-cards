@@ -11,11 +11,11 @@ export class PgPromiseUserRepository implements UserRepository {
   async findByEmail(data: string): Promise<UserModel.Model | null> {
     try {
       await db.connect();
-      const founded = await db.one<UserModel.Model>(
+      const founded = await db.oneOrNone<UserModel.Model>(
         UserRepositoryQueries.FIND_BY_EMAIL,
         data
       );
-      return founded;
+      return founded ?? null;
     } catch (error: any) {
       throw new Error(error.toString());
     }
