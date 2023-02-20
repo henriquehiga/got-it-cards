@@ -4,7 +4,7 @@ import { UserRepository } from "../protocols/user-repository";
 
 enum UserRepositoryQueries {
   SAVE = "INSERT INTO gotitcards.users(name, email, password) VALUES (${name}, ${email}, ${password});",
-  FIND_BY_EMAIL = "SELECT TOP 1 FROM gotitcards.users WHERE email = $email",
+  FIND_BY_EMAIL = "SELECT * FROM gotitcards.users WHERE email = $1",
 }
 
 export class PgPromiseUserRepository implements UserRepository {
