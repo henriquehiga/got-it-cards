@@ -1,5 +1,4 @@
 import { LoginUser } from "../../domain/usecases/login-user";
-import { PersistNewFlashCard } from "../../domain/usecases/persist-new-flash-card";
 import { Controller } from "../protocols/controller";
 import { HttpRequest, HttpResponse } from "../protocols/http";
 
