@@ -3,7 +3,7 @@ import { db } from "../../infra/pg-promise";
 import { FlashCardRepository } from "./../protocols/flash-card-repository";
 
 enum FlashCardRepositoryQueries {
-  SAVE = "INSERT INTO gotitcards.flash_cards(id, question, awnser, category, dificulty, type) VALUES (${id}, ${question}, ${awnser}, ${category}, ${dificulty}, ${type});",
+  SAVE = "INSERT INTO gotitcards.flash_cards(id, user_id, question, awnser, category, dificulty, type) VALUES (${id}, ${user_id}, ${question}, ${awnser}, ${category}, ${dificulty}, ${type});",
 }
 
 export class PgPromiseFlashCardRepository implements FlashCardRepository {
