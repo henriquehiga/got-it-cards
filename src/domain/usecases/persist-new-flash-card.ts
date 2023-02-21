@@ -13,9 +13,12 @@ export class PersistNewFlashCard {
     data: FlashCardModel.Create
   ): Promise<Either<ErrorResponse, FlashCardModel.Model>> {
     let id = IdGenerator.get();
-    const dataWithId = {
+    const formatedDate = new Date().toISOString().substring(0, 10);
+    const dataWithId: FlashCardModel.Model = {
       id,
       ...data,
+      created_at: formatedDate,
+      updated_at: formatedDate,
     };
     const flashCardOrError = FlashCard.create(dataWithId);
     if (flashCardOrError.isLeft()) {
