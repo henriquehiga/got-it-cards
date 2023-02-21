@@ -1,6 +1,7 @@
 import { RegisterUser } from "../../domain/usecases/register-user";
 import { Controller } from "../protocols/controller";
 import { HttpRequest, HttpResponse } from "../protocols/http";
+import { CREATED, REQUEST_BODY_ERROR } from "../protocols/http-errors";
 
 export class RegisterUserController implements Controller {
   constructor(private readonly registerUserUsecase: RegisterUser) {}
@@ -10,14 +11,8 @@ export class RegisterUserController implements Controller {
       request.body
     );
     if (usecaseResponse.isLeft()) {
-      return {
-        body: usecaseResponse.value.msg,
-        statusCode: 400,
-      };
+      return REQUEST_BODY_ERROR(usecaseResponse.value.msg);
     }
-    return {
-      body: usecaseResponse.value,
-      statusCode: 201,
-    };
+    return CREATED(usecaseResponse.value);
   }
 }

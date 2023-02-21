@@ -1,35 +1,36 @@
 import { Request, NextFunction, Response } from "express";
 import { JwtToken } from "../../libs/jwt-token";
+import { UNAUTHORIZED_ERROR } from "../../presentations/protocols/http-errors";
 
-export default (req: Request, res: Response, next: NextFunction): void => {
-  const authorization = req.headers["authorization"];
-  const path = req.path;
+export default async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<any> => {
+  const { authorization } = req.headers;
+  const { path } = req;
+
   if (path.includes("/login-user") || path.includes("/register-user")) {
-    next();
-    return;
+    return next();
   }
+
   if (!authorization) {
-    res.status(401).json({
-      body: "Please authenticate",
-      statusCode: 401,
-    });
-    return;
+    return res
+      .status(UNAUTHORIZED_ERROR().statusCode)
+      .json(UNAUTHORIZED_ERROR());
   }
+
   try {
-    const valid = JwtToken.validate(authorization);
+    const valid = await JwtToken.validate(authorization);
     if (!valid) {
-      res.status(401).json({
-        body: "Please authenticate",
-        statusCode: 401,
-      });
-      return;
+      return res
+        .status(UNAUTHORIZED_ERROR().statusCode)
+        .json(UNAUTHORIZED_ERROR());
     }
-    next();
+    return next();
   } catch (err) {
-    res.status(401).json({
-      body: "Please authenticate",
-      statusCode: 401,
-    });
-    return;
+    return res
+      .status(UNAUTHORIZED_ERROR().statusCode)
+      .json(UNAUTHORIZED_ERROR());
   }
 };
