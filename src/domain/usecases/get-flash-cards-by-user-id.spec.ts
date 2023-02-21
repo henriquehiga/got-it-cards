@@ -45,6 +45,7 @@ describe("GetFlashCardsByUserId Usecase", () => {
         email: "userid@mail.com",
         name: "user name",
         password: "hashed_password",
+        last_login: "",
       })
     );
     const flashCards = (await sut.execute(userIdValue))
@@ -60,6 +61,7 @@ describe("GetFlashCardsByUserId Usecase", () => {
         email: "userid@mail.com",
         name: "user name",
         password: "hashed_password",
+        last_login: "",
       })
     );
     vitest.spyOn(flashCardsRepository, "findByUserId").mockReturnValue(
