@@ -4,7 +4,7 @@ import { FlashCardRepository } from "./../protocols/flash-card-repository";
 
 enum FlashCardRepositoryQueries {
   SAVE = "INSERT INTO gotitcards.flash_cards(id, user_id, question, awnser, category, dificulty, type, created_at, updated_at) VALUES (${id}, ${user_id}, ${question}, ${awnser}, ${category}, ${dificulty}, ${type}, ${created_at}, ${updated_at});",
-  FIND_BY_USER_ID = "SELECT * FROM gotitcards.flash_cards WHERE user_id = $1",
+  FIND_BY_USER_ID = "SELECT * FROM gotitcards.flash_cards WHERE user_id = $1;",
 }
 
 export class PgPromiseFlashCardRepository implements FlashCardRepository {
@@ -15,6 +15,7 @@ export class PgPromiseFlashCardRepository implements FlashCardRepository {
         FlashCardRepositoryQueries.FIND_BY_USER_ID,
         data
       );
+      await db.$pool.end();
       return flashCards ?? [];
     } catch (error: any) {
       throw new Error(error.toString());
@@ -25,6 +26,7 @@ export class PgPromiseFlashCardRepository implements FlashCardRepository {
     try {
       await db.connect();
       await db.none(FlashCardRepositoryQueries.SAVE, data);
+      await db.$pool.end();
       return data;
     } catch (error: any) {
       throw new Error(error.toString());

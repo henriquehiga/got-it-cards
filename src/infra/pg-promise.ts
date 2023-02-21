@@ -13,5 +13,6 @@ const config = {
   database: ENV_DB_NAME,
   user: ENV_DB_USER,
   password: ENV_DB_PASS,
+  query_timeout: 5000,
 };
 export const db = pgp(config);
