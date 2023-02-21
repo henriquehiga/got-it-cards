@@ -29,6 +29,8 @@ export class LoginUser {
         return left({ error, msg: error.message });
       }
       const token = JwtToken.get({ role: "COMMON", email: user.email });
+      const date = new Date().toISOString().slice(0, 19) + "000Z";
+      await this.userRepo.login(user.email, date);
       return right({ email: user.email, name: user.name, token });
     } catch (error) {
       console.error(error);
