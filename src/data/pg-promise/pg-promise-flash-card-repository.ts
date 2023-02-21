@@ -10,7 +10,6 @@ enum FlashCardRepositoryQueries {
 export class PgPromiseFlashCardRepository implements FlashCardRepository {
   async findByUserId(data: string): Promise<FlashCardModel.Model[]> {
     try {
-      await db.connect();
       const flashCards = await db.manyOrNone<FlashCardModel.Model>(
         FlashCardRepositoryQueries.FIND_BY_USER_ID,
         data
@@ -23,7 +22,6 @@ export class PgPromiseFlashCardRepository implements FlashCardRepository {
 
   async save(data: FlashCardModel.Model): Promise<FlashCardModel.Model> {
     try {
-      await db.connect();
       await db.none(FlashCardRepositoryQueries.SAVE, data);
       return data;
     } catch (error: any) {

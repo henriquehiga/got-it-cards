@@ -11,7 +11,6 @@ enum UserRepositoryQueries {
 export class PgPromiseUserRepository implements UserRepository {
   async login(data: string, date: string): Promise<void> {
     try {
-      await db.connect();
       await db.none(UserRepositoryQueries.LOGIN, [date, data]);
     } catch (error: any) {
       throw new Error(error.toString());
@@ -33,7 +32,6 @@ export class PgPromiseUserRepository implements UserRepository {
 
   async save(data: UserModel.Model): Promise<UserModel.Model> {
     try {
-      await db.connect();
       await db.none(UserRepositoryQueries.SAVE, data);
       return data;
     } catch (error: any) {
