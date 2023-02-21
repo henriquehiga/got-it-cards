@@ -1,5 +1,6 @@
 import { UserRepository } from "../../data/protocols/user-repository";
 import { Crypto } from "../../libs/crypto";
+import { JwtToken } from "../../libs/jwt-token";
 import { Either, left, right } from "../../shared/either";
 import { ErrorResponse } from "../../shared/error-response";
 import { UnexpectedServerError } from "../../shared/error/unexpected-server-error";
@@ -27,7 +28,8 @@ export class LoginUser {
         const error = new WrongLoginDataError();
         return left({ error, msg: error.message });
       }
-      return right({ email: user.email, name: user.name });
+      const token = JwtToken.get({ role: "COMMON", email: user.email });
+      return right({ email: user.email, name: user.name, token });
     } catch (error) {
       console.error(error);
       const unexpectedError = new UnexpectedServerError(
