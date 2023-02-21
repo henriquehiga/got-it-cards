@@ -5,6 +5,6 @@ export namespace UserModel {
     password: string;
   };
   export type Create = UserModel.Model;
-  export type Return = Omit<UserModel.Model, "password">;
+  export type Return = Omit<UserModel.Model, "password"> & { token?: string };
   export type Login = Omit<UserModel.Model, "name">;
 }
