@@ -58,7 +58,7 @@ describe("LoginUserController", () => {
     expect(response.body).toEqual(missingFieldError.message);
   });
 
-  it("should return 201 if valid data is provided", async () => {
+  it("should return 200 if valid data is provided", async () => {
     const { sut } = makeSut();
     const request: HttpRequest = {
       body: {
@@ -71,7 +71,7 @@ describe("LoginUserController", () => {
       },
     };
     const response: HttpResponse = await sut.handle(request);
-    expect(response.statusCode).toBe(201);
+    expect(response.statusCode).toBe(200);
     expect(response.body).toHaveProperty("name");
     expect(response.body).toHaveProperty("email");
   });
