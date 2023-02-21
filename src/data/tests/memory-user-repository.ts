@@ -16,4 +16,18 @@ export class InMemoryUserRepository implements UserRepository {
     this.db.push(data);
     return data;
   }
+
+  async login(data: string, time: string): Promise<void> {
+    const founded = this.db.find((user) => user.email === data);
+    if (!founded) {
+      return;
+    }
+    founded.last_login = time;
+    let newDb = [];
+    this.db.forEach((user) => {
+      user.email != founded.email && newDb.push(user);
+    });
+    newDb.push(founded);
+    this.db = newDb;
+  }
 }
