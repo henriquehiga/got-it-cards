@@ -15,7 +15,6 @@ export class PgPromiseFlashCardRepository implements FlashCardRepository {
         FlashCardRepositoryQueries.FIND_BY_USER_ID,
         data
       );
-      await db.$pool.end();
       return flashCards ?? [];
     } catch (error: any) {
       throw new Error(error.toString());
@@ -26,7 +25,6 @@ export class PgPromiseFlashCardRepository implements FlashCardRepository {
     try {
       await db.connect();
       await db.none(FlashCardRepositoryQueries.SAVE, data);
-      await db.$pool.end();
       return data;
     } catch (error: any) {
       throw new Error(error.toString());

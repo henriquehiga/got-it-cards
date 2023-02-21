@@ -25,7 +25,6 @@ export class PgPromiseUserRepository implements UserRepository {
         UserRepositoryQueries.FIND_BY_EMAIL,
         data
       );
-      await db.$pool.end();
       return founded ?? null;
     } catch (error: any) {
       throw new Error(error.toString());
@@ -36,7 +35,6 @@ export class PgPromiseUserRepository implements UserRepository {
     try {
       await db.connect();
       await db.none(UserRepositoryQueries.SAVE, data);
-      await db.$pool.end();
       return data;
     } catch (error: any) {
       throw new Error(error.toString());
