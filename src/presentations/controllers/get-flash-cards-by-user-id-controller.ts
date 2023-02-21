@@ -22,7 +22,7 @@ export class GetFlashCardsByUserIdController implements Controller {
     }
     return {
       body: usecaseResponse.value,
-      statusCode: 201,
+      statusCode: 200,
     };
   }
 }
