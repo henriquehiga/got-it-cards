@@ -10,7 +10,11 @@ export default async (
   const { authorization } = req.headers;
   const { path } = req;
 
-  if (path.includes("/login-user") || path.includes("/register-user")) {
+  if (
+    path.includes("/login-user") ||
+    path.includes("/register-user") ||
+    path.includes("/validate-token")
+  ) {
     return next();
   }
 
