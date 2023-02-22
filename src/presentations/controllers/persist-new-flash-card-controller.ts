@@ -4,12 +4,10 @@ import { HttpRequest, HttpResponse } from "../protocols/http";
 import { CREATED, REQUEST_BODY_ERROR } from "../protocols/http-errors";
 
 export class PersistNewFlashCardController implements Controller {
-  constructor(private readonly persistNewFlashCard: PersistNewFlashCard) {}
+  constructor(private readonly usecase: PersistNewFlashCard) {}
 
   async handle(request: HttpRequest): Promise<HttpResponse> {
-    const usecaseResponse = await this.persistNewFlashCard.execute(
-      request.body
-    );
+    const usecaseResponse = await this.usecase.execute(request.body);
     if (usecaseResponse.isLeft()) {
       return REQUEST_BODY_ERROR(usecaseResponse.value.msg);
     }
