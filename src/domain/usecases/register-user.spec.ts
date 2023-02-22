@@ -27,6 +27,7 @@ describe("RegisterUser Usecase", () => {
       name: "",
       email: "valid@mail.com",
       password: "valid_hashed_password",
+      last_login: "last-login",
     };
     const error = (await sut.execute(invalidCreateUserModel))
       .value as ErrorResponse;
