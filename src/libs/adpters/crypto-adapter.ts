@@ -1,7 +1,7 @@
 import { Crypto } from "../crypto";
 import { CryptoProtocol } from "./protocols/crypto-protocol";
 
-export class CrypoAdapter implements CryptoProtocol {
+export class CryptoAdapter implements CryptoProtocol {
   decrypt(data: string): string {
     return Crypto.decrypt(data);
   }
