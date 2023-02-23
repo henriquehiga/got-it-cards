@@ -1,22 +1,34 @@
-import { LoginUser } from "./login-user";
-import { WrongLoginDataError } from "./errors/wrong-login-data-error";
-import { InMemoryUserRepository } from "./../../data/tests/memory-user-repository";
-import { ErrorResponse } from "./../../shared/error-response";
-import { UserModel } from "../entities/models/user-model";
 import { describe, expect, it, vitest } from "vitest";
 import { UserRepository } from "../../data/protocols/user-repository";
+import { CryptoProtocol } from "../../libs/adpters/protocols/crypto-protocol";
+import { UserModel } from "../entities/models/user-model";
+import { InMemoryUserRepository } from "./../../data/tests/memory-user-repository";
+import { ErrorResponse } from "./../../shared/error-response";
+import { WrongLoginDataError } from "./errors/wrong-login-data-error";
+import { LoginUser } from "./login-user";
 
 type sutTypes = {
   sut: LoginUser;
   repository: UserRepository;
+  cryptoAdapterMock: CryptoProtocol;
 };
 
 const makeSut = (): sutTypes => {
   const repository: UserRepository = new InMemoryUserRepository();
-  const sut = new LoginUser(repository);
+  class CryptoAdapterMock implements CryptoProtocol {
+    decrypt(data: string): string {
+      return "";
+    }
+    compareHash(data: string, hash: string): boolean {
+      return true;
+    }
+  }
+  const cryptoAdapterMock = new CryptoAdapterMock();
+  const sut = new LoginUser(repository, cryptoAdapterMock);
   return {
     sut,
     repository,
+    cryptoAdapterMock,
   };
 };
 
@@ -33,23 +45,23 @@ describe("LoginUser Usecase", () => {
     expect(error.msg).toBe(new WrongLoginDataError().message);
   });
 
-  //   it("should login if correct data is provided", async () => {
-  //     const { sut, repository } = makeSut();
-  //     const correctLoginUserModel: UserModel.Login = {
-  //       email: "valid@mail.com",
-  //       password:
-  //         "U2FsdGVkX1/LZGZ3IxCV/9pTJsi1GVaC+ODHlRBSiONsouJSPLhiIBxvGBxVXY6N0CU6V20LM4moUSCYgpcqxA==",
-  //     };
-  //     vitest.spyOn(repository, "findByEmail").mockReturnValue(
-  //       Promise.resolve({
-  //         name: "valid name",
-  //         email: "valid@mail.com",
-  //         password:
-  //           "$2b$10$IH2x3ITe8JCh2BOXYI7LAuctfuz.fO.R7TX1hNGKiQQPG7Fe2gyIa",
-  //       })
-  //     );
-  //     const user = (await sut.execute(correctLoginUserModel))
-  //       .value as UserModel.Return;
-  //     expect(user.email).toEqual("valid@mail.com");
-  //   });
+  it("should login if correct data is provided", async () => {
+    const { sut, repository } = makeSut();
+    const correctLoginUserModel: UserModel.Login = {
+      email: "valid@mail.com",
+      password: "valid-password",
+    };
+    vitest.spyOn(repository, "findByEmail").mockReturnValue(
+      Promise.resolve({
+        email: "valid@mail.com",
+        name: "valid name",
+        password: "",
+        last_login: "",
+      })
+    );
+    const user = (await sut.execute(correctLoginUserModel))
+      .value as UserModel.Return;
+    expect(user.email).toEqual("valid@mail.com");
+    expect(user).toHaveProperty("token");
+  });
 });

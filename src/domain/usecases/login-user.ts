@@ -1,5 +1,5 @@
 import { UserRepository } from "../../data/protocols/user-repository";
-import { Crypto } from "../../libs/crypto";
+import { CryptoProtocol } from "../../libs/adpters/protocols/crypto-protocol";
 import { JwtToken } from "../../libs/jwt-token";
 import { Either, left, right } from "../../shared/either";
 import { ErrorResponse } from "../../shared/error-response";
@@ -8,7 +8,10 @@ import { UserModel } from "../entities/models/user-model";
 import { WrongLoginDataError } from "./errors/wrong-login-data-error";
 
 export class LoginUser {
-  constructor(private readonly userRepo: UserRepository) {}
+  constructor(
+    private readonly userRepo: UserRepository,
+    private readonly crypto: CryptoProtocol
+  ) {}
 
   async execute(
     data: UserModel.Login
@@ -19,8 +22,8 @@ export class LoginUser {
         const error = new WrongLoginDataError();
         return left({ error, msg: error.message });
       }
-      const decryptedPassword = Crypto.decrypt(data.password);
-      const isPasswordValid = Crypto.compareHash(
+      const decryptedPassword = this.crypto.decrypt(data.password);
+      const isPasswordValid = this.crypto.compareHash(
         decryptedPassword,
         user.password
       );
