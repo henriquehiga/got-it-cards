@@ -1,10 +1,10 @@
-import { RegisterUser } from "./register-user";
-import { InMemoryUserRepository } from "./../../data/tests/memory-user-repository";
-import { MissingFieldError } from "./../entities/errors/missing-field-error";
-import { ErrorResponse } from "./../../shared/error-response";
-import { UserModel } from "../entities/models/user-model";
 import { describe, expect, it } from "vitest";
 import { UserRepository } from "../../data/protocols/user-repository";
+import { UserModel } from "../entities/models/user-model";
+import { InMemoryUserRepository } from "./../../data/tests/memory-user-repository";
+import { ErrorResponse } from "./../../shared/error-response";
+import { MissingFieldError } from "./../entities/errors/missing-field-error";
+import { RegisterUser } from "./register-user";
 
 type sutTypes = {
   sut: RegisterUser;
@@ -27,7 +27,6 @@ describe("RegisterUser Usecase", () => {
       name: "",
       email: "valid@mail.com",
       password: "valid_hashed_password",
-      last_login: "last-login",
     };
     const error = (await sut.execute(invalidCreateUserModel))
       .value as ErrorResponse;
