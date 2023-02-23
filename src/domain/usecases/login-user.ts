@@ -28,7 +28,11 @@ export class LoginUser {
         const error = new WrongLoginDataError();
         return left({ error, msg: error.message });
       }
-      const token = JwtToken.get({ role: "COMMON", email: user.email });
+      const token = JwtToken.get({
+        role: "COMMON",
+        email: user.email,
+        name: user.name,
+      });
       const date = new Date().toISOString().slice(0, 19) + "000Z";
       await this.userRepo.login(user.email, date);
       return right({ email: user.email, name: user.name, token });
