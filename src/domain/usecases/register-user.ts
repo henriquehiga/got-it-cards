@@ -1,10 +1,10 @@
+import { UserRepository } from "../../data/protocols/user-repository";
+import { Crypto } from "../../libs/crypto";
 import { Either, left, right } from "../../shared/either";
 import { ErrorResponse } from "../../shared/error-response";
 import { UnexpectedServerError } from "../../shared/error/unexpected-server-error";
-import { UserRepository } from "../../data/protocols/user-repository";
 import { UserModel } from "../entities/models/user-model";
 import { User } from "../entities/user";
-import { Crypto } from "../../libs/crypto";
 import { UserAlreadyExistsError } from "./errors/user-already-exists-error";
 
 export class RegisterUser {
@@ -27,7 +27,10 @@ export class RegisterUser {
       ...data,
       password: hashedPassword,
     };
-    const userOrError = User.create(data);
+    const userOrError = User.create({
+      ...data,
+      last_login: "0000-00-00",
+    });
     if (userOrError.isLeft()) {
       return left(userOrError.value);
     }
