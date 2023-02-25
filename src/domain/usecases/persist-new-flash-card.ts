@@ -1,10 +1,10 @@
 import { IdGenerator } from "../../libs/id-generator";
-import { FlashCardRepository } from "./../../data/protocols/flash-card-repository";
 import { Either, left, right } from "../../shared/either";
 import { ErrorResponse } from "../../shared/error-response";
-import { FlashCardModel } from "../entities/models/flash-card-model";
-import { FlashCard } from "../entities/flash-card";
 import { UnexpectedServerError } from "../../shared/error/unexpected-server-error";
+import { FlashCard } from "../entities/flash-card";
+import { FlashCardModel } from "../entities/models/flash-card-model";
+import { FlashCardRepository } from "./../../data/protocols/flash-card-repository";
 
 export class PersistNewFlashCard {
   constructor(private readonly flashCardRepo: FlashCardRepository) {}
@@ -17,6 +17,7 @@ export class PersistNewFlashCard {
     const dataWithId: FlashCardModel.Model = {
       id,
       ...data,
+      last_review: "0000-00-00:00:00",
       created_at: formatedDate,
       updated_at: formatedDate,
     };
