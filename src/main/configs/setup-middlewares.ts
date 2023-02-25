@@ -4,12 +4,15 @@ import validateTokenMiddleware from "./validate-token-middleware";
 
 export const setupMiddlewares = (app: Express.Application) => {
   app.use(json());
-  app.use(cors({ origin: ["https://got-it-cards-front.vercel.app"] }));
+  app.use(
+    cors({
+      origin: [
+        "https://got-it-cards-front.vercel.app",
+        "http://localhost:5175",
+      ],
+    })
+  );
   app.use((req, res, next) => {
-    res.set(
-      "Access-Control-Allow-Origin",
-      "https://got-it-cards-front.vercel.app"
-    );
     validateTokenMiddleware(req, res, next);
   });
   return app;
