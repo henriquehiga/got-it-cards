@@ -5,9 +5,22 @@ import { FlashCardRepository } from "./../protocols/flash-card-repository";
 enum FlashCardRepositoryQueries {
   SAVE = "INSERT INTO gotitcards.flash_cards(id, user_id, question, awnser, category, dificulty, type, created_at, updated_at) VALUES (${id}, ${user_id}, ${question}, ${awnser}, ${category}, ${dificulty}, ${type}, ${created_at}, ${updated_at});",
   FIND_BY_USER_ID = "SELECT * FROM gotitcards.flash_cards WHERE user_id = $1;",
+  GET_FLASH_CARDS_BY_CATEGORY = "SELECT * FROM gotitcards.flash_cards WHERE category = $1;",
 }
 
 export class PgPromiseFlashCardRepository implements FlashCardRepository {
+  async getFlashCardsByCategory(data: string): Promise<FlashCardModel.Model[]> {
+    try {
+      const flashCards = await db.manyOrNone<FlashCardModel.Model>(
+        FlashCardRepositoryQueries.GET_FLASH_CARDS_BY_CATEGORY,
+        data
+      );
+      return flashCards ?? [];
+    } catch (error: any) {
+      throw new Error(error.toString());
+    }
+  }
+
   async findByUserId(data: string): Promise<FlashCardModel.Model[]> {
     try {
       const flashCards = await db.manyOrNone<FlashCardModel.Model>(

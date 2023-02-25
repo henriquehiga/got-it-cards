@@ -8,7 +8,7 @@ export const setupMiddlewares = (app: Express.Application) => {
     cors({
       origin: [
         "https://got-it-cards-front.vercel.app",
-        "http://localhost:5175",
+        "http://localhost:5173",
       ],
     })
   );
