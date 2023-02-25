@@ -4,6 +4,16 @@ import { FlashCardRepository } from "../protocols/flash-card-repository";
 export class InMemoryFlashCardRepository implements FlashCardRepository {
   private db: FlashCardModel.Model[] = [];
 
+  async getFlashCardsByCategory(data: string): Promise<FlashCardModel.Model[]> {
+    const flashCardsFounded: FlashCardModel.Model[] = [];
+    this.db.forEach((flashCard) => {
+      if (flashCard.category === data) {
+        flashCardsFounded.push(flashCard);
+      }
+    });
+    return flashCardsFounded ?? [];
+  }
+
   async findByUserId(data: string): Promise<FlashCardModel.Model[]> {
     const flashCardsFounded: FlashCardModel.Model[] = [];
     this.db.forEach((flashCard) => {
