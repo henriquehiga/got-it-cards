@@ -1,3 +1,4 @@
+import { randomInt } from "crypto";
 import { Either, left } from "../../shared/either";
 import { ErrorResponse } from "../../shared/error-response";
 import { FlashCardModel } from "../entities/models/flash-card-model";
@@ -35,21 +36,28 @@ export class BuildDeckFlashCards {
     const minCards = 6;
     const maxCards = 10;
 
-    const easyFlashCardsMax = Math.floor(flashCards.value.length * 0.2);
-    const normalFlashCardsMax = Math.floor(flashCards.value.length * 0.3);
-    const hardFlashCardsMax = Math.floor(flashCards.value.length * 0.5);
+    const quantity =
+      flashCards.value.length >= maxCards ? maxCards : flashCards.value.length;
 
-    function selectCards(array: FlashCardModel.Model[], quantity: number) {
+    const easyFlashCardsMax = Math.floor(quantity * 0.2);
+    const normalFlashCardsMax = Math.floor(quantity * 0.3);
+    const hardFlashCardsMax = Math.floor(quantity * 0.5);
+
+    function selectRandomCards(
+      array: FlashCardModel.Model[],
+      quantity: number
+    ) {
       const cards = [];
+
       for (let i = 0; i < quantity; i++) {
-        cards.push(array[i]);
+        cards.push(array[randomInt(0, array.length)]);
       }
       deckToReturn.push(...cards);
     }
 
-    selectCards(easyFlashCardsDeck, easyFlashCardsMax);
-    selectCards(normalFlashCardsDeck, normalFlashCardsMax);
-    selectCards(hardFlashCardsDeck, hardFlashCardsMax);
+    selectRandomCards(easyFlashCardsDeck, easyFlashCardsMax);
+    selectRandomCards(normalFlashCardsDeck, normalFlashCardsMax);
+    selectRandomCards(hardFlashCardsDeck, hardFlashCardsMax);
 
     if (deckToReturn.length < minCards) {
       const concatDeck = [
