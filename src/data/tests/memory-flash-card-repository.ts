@@ -2,6 +2,20 @@ import { FlashCardModel } from "../../domain/entities/models/flash-card-model";
 import { FlashCardRepository } from "../protocols/flash-card-repository";
 
 export class InMemoryFlashCardRepository implements FlashCardRepository {
+  async updateFlashCard(
+    id: string,
+    data: FlashCardModel.Model
+  ): Promise<FlashCardModel.Model> {
+    const flashCardFounded = this.db.find((flashCard) => flashCard.id === id);
+    if (flashCardFounded) {
+      const updatedFlashCard = { ...flashCardFounded, ...data };
+      this.db = this.db.map((flashCard) =>
+        flashCard.id === id ? updatedFlashCard : flashCard
+      );
+      return updatedFlashCard;
+    }
+    throw new Error("Flash card not found");
+  }
   private db: FlashCardModel.Model[] = [];
 
   async getFlashCardsByCategory(data: string): Promise<FlashCardModel.Model[]> {
