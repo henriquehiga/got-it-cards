@@ -31,6 +31,7 @@ export class PersistNewFlashCard {
       const unexpectedServerError = new UnexpectedServerError(
         "PersistNewFlashCard > flashCardRepo.save"
       );
+      console.error(error);
       return left({
         error: unexpectedServerError,
         msg: unexpectedServerError.message,

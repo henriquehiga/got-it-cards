@@ -31,6 +31,7 @@
     "@types/node": "^18.14.0",
     "@types/pg-promise": "^5.4.3",
     "@vitest/coverage-c8": "^0.28.5",
+    "@vitest/ui": "^0.29.2",
     "git-commit-msg-linter": "^4.7.3",
     "husky": "^8.0.3",
     "nodemon": "^2.0.20",
