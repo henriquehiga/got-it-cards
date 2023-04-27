@@ -5,7 +5,7 @@ import { FlashCardRepository } from "./../protocols/flash-card-repository";
 enum FlashCardRepositoryQueries {
   SAVE = "INSERT INTO gotitcards.flash_cards(id, user_id, question, awnser, category, dificulty, type, last_review, created_at, updated_at) VALUES (${id}, ${user_id}, ${question}, ${awnser}, ${category}, ${dificulty}, ${type}, ${last_review}, ${created_at}, ${updated_at});",
   FIND_BY_USER_ID = "SELECT * FROM gotitcards.flash_cards WHERE user_id = $1;",
-  GET_FLASH_CARDS_BY_CATEGORY = "SELECT * FROM gotitcards.flash_cards WHERE category = $1;",
+  GET_FLASH_CARDS_BY_CATEGORY = "SELECT * FROM gotitcards.flash_cards WHERE id = $1;",
   UPDATE_FLASH_CARD = "UPDATE gotitcards.flash_cards SET question = ${question}, awnser = ${awnser}, category = ${category}, dificulty = ${dificulty}, type = ${type}, last_review = ${last_review}, updated_at = ${updated_at} WHERE id = ${id};",
 }
 
@@ -25,11 +25,11 @@ export class PgPromiseFlashCardRepository implements FlashCardRepository {
     }
   }
 
-  async getFlashCardsByCategory(data: string): Promise<FlashCardModel.Model[]> {
+  async getFlashCardsByCategoryId(id: string): Promise<FlashCardModel.Model[]> {
     try {
       const flashCards = await db.manyOrNone<FlashCardModel.Model>(
         FlashCardRepositoryQueries.GET_FLASH_CARDS_BY_CATEGORY,
-        data
+        id
       );
       return flashCards ?? [];
     } catch (error: any) {

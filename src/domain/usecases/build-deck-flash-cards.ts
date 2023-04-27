@@ -3,16 +3,17 @@ import { Either, left } from "../../shared/either";
 import { ErrorResponse } from "../../shared/error-response";
 import { FlashCardModel } from "../entities/models/flash-card-model";
 import { right } from "./../../shared/either";
-import { GetFlashCardsByCategory } from "./get-flash-cards-by-category";
+import { GetFlashCardsByCategoryId } from "./get-flash-cards-by-category-id";
+
 export class BuildDeckFlashCards {
   constructor(
-    private readonly getFlashCardsByCategory: GetFlashCardsByCategory
+    private readonly getFlashCardsByCategoryId: GetFlashCardsByCategoryId
   ) {}
 
   async execute(
-    category: string
+    id: string
   ): Promise<Either<ErrorResponse, FlashCardModel.Model[]>> {
-    const flashCards = await this.getFlashCardsByCategory.execute(category);
+    const flashCards = await this.getFlashCardsByCategoryId.execute(id);
     const deckToReturn: FlashCardModel.Model[] = [];
 
     if (flashCards.isLeft()) {
