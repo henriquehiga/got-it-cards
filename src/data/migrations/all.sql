@@ -24,7 +24,7 @@ CREATE TABLE gotitcards.flash_cards (
     user_id text,
     question text,
     awnser text,
-    category text,
+    category_id text,
     dificulty integer,
     type text,
     created_at text,

@@ -4,7 +4,7 @@ export namespace FlashCardModel {
     user_id?: string;
     question: string;
     awnser: string;
-    category: string;
+    category_id: string;
     dificulty: number;
     type: string;
     last_review?: string;

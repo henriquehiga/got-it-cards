@@ -1,9 +1,9 @@
-import { CategoryRepository } from "./../../data/protocols/category-repository";
 import { UserRepository } from "../../data/protocols/user-repository";
 import { Either, left, right } from "../../shared/either";
 import { ErrorResponse } from "../../shared/error-response";
-import { InexistentUserIdError } from "./errors/inexistent-user-id-error";
 import { CategoryModel } from "../entities/models/category-model";
+import { CategoryRepository } from "./../../data/protocols/category-repository";
+import { InexistentUserIdError } from "./errors/inexistent-user-id-error";
 
 export class GetCategoriesByUserId {
   constructor(
